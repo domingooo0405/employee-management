@@ -12,11 +12,16 @@ function App() {
     <div>
       <Router>
         <HeaderComponent />
+
         <div className="container">
           <Switch>
             <Route exact path="/" component={ItemsComponent}></Route>
             <Route exact path="/items" component={ItemsComponent}></Route>
-            <Route exact path="/add-item/:id" component={AddItemComponent}></Route>
+            <Route
+              exact
+              path="/add-item/:id"
+              component={AddItemComponent}
+            ></Route>
             <Route path={"/view-item/:id"} component={ReceiptCompoent}></Route>
           </Switch>
         </div>

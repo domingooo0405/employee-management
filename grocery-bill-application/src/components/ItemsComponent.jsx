@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import ItemService from "../service/ItemService";
 
 class ItemsComponent extends Component {
@@ -14,6 +14,7 @@ class ItemsComponent extends Component {
     this.viewItem = this.viewItem.bind(this);
     this.discounted = this.discounted.bind(this);
   }
+
   componentDidMount() {
     ItemService.getItems().then((response) => {
       this.setState({
@@ -29,11 +30,13 @@ class ItemsComponent extends Component {
     this.props.history.push(`/add-item/${id}`);
   }
   deleteItem(id) {
-    ItemService.deleteItem(id).then((response) => {
-      this.setState({
-        items: this.state.items.filter((item) => item.id !== id),
+    if (window.confirm("Are you sure you want to delete?")) {
+      ItemService.deleteItem(id).then((response) => {
+        this.setState({
+          items: this.state.items.filter((item) => item.id !== id),
+        });
       });
-    });
+    }
   }
   discounted(item) {
     if (item >= 1) {
@@ -111,6 +114,7 @@ class ItemsComponent extends Component {
             </tbody>
           </table>
         </div>
+
         <br></br>
         <button className="button-35" onClick={this.addItem}>
           Add Item

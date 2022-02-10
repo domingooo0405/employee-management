@@ -80,6 +80,8 @@ class AddItemComponent extends Component {
 
           setTimeout(() => document.querySelector(".error").remove(), 3000);
         } else {
+          alert("Successfully Added!");
+
           ItemService.insertItem(item).then((response) => {
             this.props.history.push("/items");
           });
@@ -95,6 +97,7 @@ class AddItemComponent extends Component {
 
           setTimeout(() => document.querySelector(".error").remove(), 3000);
         } else {
+          alert("Successfully Updated!");
           ItemService.updateItem(item, this.state.id).then((response) => {
             this.props.history.push("/items");
           });
@@ -157,7 +160,11 @@ class AddItemComponent extends Component {
 
                   <br></br>
                   <div className="text-center">
-                    <button className="button-36" onClick={this.addOrUpdate}>
+                    <button
+                      id="add"
+                      className="button-36"
+                      onClick={this.addOrUpdate}
+                    >
                       Save
                     </button>
                     <button

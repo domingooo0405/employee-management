@@ -6,6 +6,7 @@ import FooterComponent from "./components/FooterComponent";
 import ItemsComponent from "./components/ItemsComponent";
 import AddItemComponent from "./components/AddItemComponent";
 import ReceiptCompoent from "./components/ReceiptComponent";
+import LoginUserComponent from "./components/LoginUserComponent";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
 
         <div className="container">
           <Switch>
-            <Route exact path="/" component={ItemsComponent}></Route>
+            <Route exact path="/" component={LoginUserComponent}></Route>
             <Route exact path="/items" component={ItemsComponent}></Route>
             <Route
               exact

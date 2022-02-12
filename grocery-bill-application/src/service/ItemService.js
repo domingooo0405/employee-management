@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const ITEM_API_BASE_URL = "http://localhost:8081/gba/api/items";
+const ITEM_API_BASE_URL = "http://localhost:8082/items";
+
 
 class ItemService {
   getItems() {
@@ -16,10 +17,10 @@ class ItemService {
   updateItem(item, id) {
     return axios.put(ITEM_API_BASE_URL + "/" + id, item);
   }
-  deleteItem(id){
-    return axios.delete(ITEM_API_BASE_URL+"/"+id)
-
+  deleteItem(id) {
+    return axios.delete(ITEM_API_BASE_URL + "/" + id);
   }
+
 }
 
 export default new ItemService();

@@ -120,64 +120,63 @@ class AddItemComponent extends Component {
     return (
       <div>
         <br></br>
-        <div className="container">
-          <div className="row">
-            <div className="card col-md-6 offset-md-3 ">
-              <br></br>
-              {this.getTitle()}
-              <div className="card-body">
-                <div id="msg"></div>
-                <form>
-                  <div className="form-group">
-                    <input
-                      id="pName"
-                      placeholder="Name"
-                      className="form-control"
-                      value={this.state.name}
-                      onChange={this.changeName}
-                    />
-                  </div>
-                  <br></br>
-                  <div className="form-group">
-                    <input
-                      id="oPrice"
-                      placeholder="Price"
-                      className="form-control"
-                      value={this.state.originalPrice}
-                      onChange={this.changeOriginalPrice}
-                    />
-                  </div>
-                  <br></br>
-                  <div className="form-group">
-                    <input
-                      id="dPercentage"
-                      placeholder="Discount Percentage"
-                      className="form-control"
-                      value={this.state.discountPercentage}
-                      onChange={this.changeDiscountPercentage}
-                    />
-                  </div>
 
-                  <br></br>
-                  <div className="text-center">
-                    <button
-                      id="add"
-                      className="button-36"
-                      onClick={this.addOrUpdate}
-                    >
-                      Save
-                    </button>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      className="button-34"
-                      onClick={this.cancel}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
+        <div className="border container">
+          <br></br>
+          {this.getTitle()}
+          <div className="card-body">
+            <div id="msg" className="add-update-msg"></div>
+            <form>
+              <div className="form-group">
+                <br></br>
+
+                <input
+                  id="pName"
+                  placeholder="Name"
+                  className="form-control"
+                  value={this.state.name}
+                  onChange={this.changeName}
+                />
               </div>
-            </div>
+              <br></br>
+              <div className="form-group">
+                <input
+                  id="oPrice"
+                  placeholder="Price"
+                  className="form-control"
+                  value={this.state.originalPrice}
+                  onChange={this.changeOriginalPrice}
+                />
+              </div>
+              <br></br>
+              <div className="form-group">
+                <input
+                  id="dPercentage"
+                  placeholder="Discount Percentage"
+                  className="form-control"
+                  value={this.state.discountPercentage}
+                  onChange={this.changeDiscountPercentage}
+                />
+              </div>
+
+              <br></br>
+              <div className="text-center">
+                <button
+                  id="add"
+                  className="button-36"
+                  onClick={this.addOrUpdate}
+                >
+                  Save
+                </button>
+                <button
+                  style={{ marginLeft: "10px" }}
+                  className="button-34"
+                  onClick={this.cancel}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

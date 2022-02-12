@@ -13,6 +13,7 @@ class ItemsComponent extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.viewItem = this.viewItem.bind(this);
     this.discounted = this.discounted.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +37,10 @@ class ItemsComponent extends Component {
           items: this.state.items.filter((item) => item.id !== id),
         });
       });
+      const Message = document.querySelector("#msg");
+      Message.innerHTML = "<h4 class='error'>Successfully deleted!<h4/>";
+
+      setTimeout(() => document.querySelector(".error").remove(), 3000);
     }
   }
   discounted(item) {
@@ -60,12 +65,20 @@ class ItemsComponent extends Component {
   viewItem(id) {
     this.props.history.push(`/view-item/${id}`);
   }
+  logout() {
+    this.props.history.push("/");
+  }
   render() {
     return (
       <div>
-        <h2 className="text-center">Item List </h2>
+        <h2 className="text-center">
+          Item List
+          <button className="button-logout align" onClick={this.logout}>
+            Logout
+          </button>
+        </h2>
         <div className="table-wrapper-scroll-y my-custom-scrollbar">
-          <table className="table table-striped table-bordered mb-0">
+          <table className="table table-striped table-bordered mb-0 table-item">
             <thead className="thead-dark">
               <tr>
                 <th>Product Name</th>
@@ -114,11 +127,12 @@ class ItemsComponent extends Component {
             </tbody>
           </table>
         </div>
-
+        
         <br></br>
         <button className="button-35" onClick={this.addItem}>
           Add Item
         </button>
+        <p id="msg" className="deleted-message"></p>
       </div>
     );
   }

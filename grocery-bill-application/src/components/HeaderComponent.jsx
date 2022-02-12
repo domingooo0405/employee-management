@@ -7,7 +7,9 @@ class HeaderComponent extends Component {
         <header>
           <br></br>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">Grocery Bill Application</div>
+            <div className="container-fluid">
+              <h1>Grocery Bill Application</h1>{" "}
+            </div>
           </nav>
         </header>
       </div>

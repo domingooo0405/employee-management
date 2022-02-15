@@ -1,5 +1,8 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import ItemService from "../service/ItemService";
+
+import MenuComponent from "./MenuComponent";
+import grocery from "../images/grocery-logo.jpg";
 
 class ItemsComponent extends Component {
   constructor(props) {
@@ -14,6 +17,7 @@ class ItemsComponent extends Component {
     this.viewItem = this.viewItem.bind(this);
     this.discounted = this.discounted.bind(this);
     this.logout = this.logout.bind(this);
+    this.totalPrice = this.totalPrice.bind(this);
   }
 
   componentDidMount() {
@@ -43,96 +47,120 @@ class ItemsComponent extends Component {
       setTimeout(() => document.querySelector(".error").remove(), 3000);
     }
   }
-  discounted(item) {
-    if (item >= 1) {
-      return (
-        <i
-          className="fa fa-check"
-          aria-hidden="true"
-          style={{ color: "green" }}
-        ></i>
-      );
+  discounted(discountedPrice) {
+    if (discountedPrice > 0) {
+      return <i style={{ color: "green" }} className="fa fa-check"></i>;
     } else {
-      return (
-        <i
-          className="fa fa-times"
-          aria-hidden="true"
-          style={{ color: "red" }}
-        ></i>
-      );
+      return <i style={{ color: "red" }} className="fa fa-times"></i>;
     }
   }
   viewItem(id) {
     this.props.history.push(`/view-item/${id}`);
   }
   logout() {
+    localStorage.removeItem("loginUser");
     this.props.history.push("/");
   }
+  totalPrice() {
+    ItemService.getItems().then((response) => {
+      let items = response.data;
+      let total = 0;
+      for (let foundItem of items) {
+        total = total + foundItem.totalBill;
+      }
+      const Total = document.querySelector("#totalA");
+      Total.innerHTML = `${total} pesos`;
+    });
+  }
+
   render() {
     return (
       <div>
-        <h2 className="text-center">
-          Item List
-          <button className="button-logout align" onClick={this.logout}>
-            Logout
-          </button>
-        </h2>
-        <div className="table-wrapper-scroll-y my-custom-scrollbar">
-          <table className="table table-striped table-bordered mb-0 table-item">
-            <thead className="thead-dark">
+        <div>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <MenuComponent />
+          </nav>
+        </div>
+        <br></br>
+
+        <div>
+          <br></br>
+          <br></br>
+          <table className="table table-borderless mb-0 table-item total ">
+            <thead style={{ backgroundColor: "lightgray" }}>
               <tr>
-                <th>Product Name</th>
-                <th>Original Price</th>
-                <th>Discounted Price</th>
-                <th>Discount Percentage</th>
-                <th>Discounted</th>
-                <th>Total Bill</th>
-                <th style={{ textAlign: "center" }}>Actions</th>
+                <th>Total Amount:</th>
+                <th id="totalA">{this.totalPrice()}</th>
+                <th>
+                  <button
+                    className="button-add-item add-position"
+                    onClick={this.addItem}
+                  >
+                    <i className="fa fa-cart-plus"></i> Add Item
+                  </button>
+                </th>
               </tr>
             </thead>
-            <tbody>
-              {this.state.items.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>{item.originalPrice + " "}pesos</td>
-                  <td>{item.discountedPrice + " "}pesos</td>
-                  <td>{item.discountPercentage}%</td>
-                  <td>{this.discounted(item.discountedPrice)}</td>
-                  <td>{item.totalBill + " "}pesos</td>
-                  <td>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      className="button-33"
-                      onClick={() => this.updateItem(item.id)}
-                    >
-                      Update
-                    </button>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      className="button-34"
-                      onClick={() => this.deleteItem(item.id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      className="button-36"
-                      onClick={() => this.viewItem(item.id)}
-                    >
-                      Print
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody></tbody>
           </table>
+          <br></br>
+          <img src={grocery} className="logo-grocery" alt=""></img>
+          <div className="table-wrapper-scroll-y my-custom-scrollbar">
+            <table className="table table-border-secondary  mb-0 table-item size-table ">
+              <thead style={{ backgroundColor: "lightgray" }}>
+                <tr>
+                  <th style={{ width: "15%" }}>Product Name</th>
+                  <th style={{ width: "12%" }}>Price</th>
+                  <th>Discounted Price</th>
+                  <th style={{ width: "18%" }}>Discount Percentage</th>
+                  <th>Discounted</th>
+                  <th>Total Price</th>
+                  <th style={{ textAlign: "center" }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.items.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.name}</td>
+                    <td>{item.originalPrice + " "}pesos</td>
+                    <td>{item.discountedPrice + " "}pesos</td>
+                    <td>{item.discountPercentage}%</td>
+                    <td>{this.discounted(item.discountedPrice)}</td>
+                    <td>{item.totalBill + " "}pesos</td>
+                    <td>
+                      <button
+                        style={{ marginLeft: "10px" }}
+                        className="button-update"
+                        onClick={() => this.updateItem(item.id)}
+                      >
+                        <i className="fa fa-pencil-square-o"></i>
+                      </button>
+                      <button
+                        style={{ marginLeft: "10px" }}
+                        className="button-delete"
+                        onClick={() => this.deleteItem(item.id)}
+                      >
+                        <i className="fa fa-trash"></i>
+                      </button>
+                      <button
+                        style={{ marginLeft: "10px" }}
+                        className="button-print"
+                        onClick={() => this.viewItem(item.id)}
+                      >
+                        <i className="fa fa-print"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <br></br>
+
+            <p id="msg" className="deleted-message"></p>
+            <br></br>
+          </div>
         </div>
-        
-        <br></br>
-        <button className="button-35" onClick={this.addItem}>
-          Add Item
-        </button>
-        <p id="msg" className="deleted-message"></p>
       </div>
     );
   }

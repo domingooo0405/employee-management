@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ItemService from "../service/ItemService";
+import grocery from "../images/grocery-logo.jpg";
 
 class AddItemComponent extends Component {
   constructor(props) {
@@ -60,26 +61,39 @@ class AddItemComponent extends Component {
       discountPercentage: this.state.discountPercentage,
     };
     const Name = document.querySelector("#pName");
-    const DPrice = document.querySelector("#oPrice");
-    const Price = document.querySelector("#dPercentage");
+    const OPrice = document.querySelector("#oPrice");
+    const dPercent = document.querySelector("#dPercentage");
     const Message = document.querySelector("#msg");
 
     if (
       Name.value.length === 0 ||
-      DPrice.value.length === 0 ||
-      Price.value.length === 0
+      OPrice.value.length === 0 ||
+      dPercent.value.length === 0
     ) {
       Message.innerHTML = "<h4 class='error'> Please complete details!<h4/>";
 
       setTimeout(() => document.querySelector(".error").remove(), 3000);
     } else {
       if (this.state.id === "_add") {
-        if (item == this.state.name) {
+        let DiscountPercentage = document.getElementById("dPercentage").value;
+        let Price = document.getElementById("oPrice").value;
+        if (DiscountPercentage > 100) {
           Message.innerHTML =
-            "<h4 class='error'>Item already exist!{this.state.name}<h4/> ";
+            "<h4 class='error'>Not more than 100% discount!<h4/> ";
 
           setTimeout(() => document.querySelector(".error").remove(), 3000);
-        } else {
+        } else if (DiscountPercentage < 0) {
+          Message.innerHTML =
+            "<h4 class='error'>Not less than 0% discount!<h4/> ";
+
+          setTimeout(() => document.querySelector(".error").remove(), 3000);
+        } 
+        else if (Price < 0) {
+          Message.innerHTML =
+            "<h4 class='error'>Not less than 0!<h4/> ";
+
+          setTimeout(() => document.querySelector(".error").remove(), 3000);
+        }else {
           alert("Successfully Added!");
 
           ItemService.insertItem(item).then((response) => {
@@ -87,13 +101,24 @@ class AddItemComponent extends Component {
           });
         }
       } else {
+        let DiscountPercentage = document.getElementById("dPercentage").value;
         if (
           Name.value.length === 0 ||
-          DPrice.value.length === 0 ||
-          Price.value.length === 0
+          OPrice.value.length === 0 ||
+          dPercent.value.length === 0
         ) {
           Message.innerHTML =
             "<h4 class='error'> Please complete details!<h4/>";
+
+          setTimeout(() => document.querySelector(".error").remove(), 3000);
+        } else if (DiscountPercentage > 100) {
+          Message.innerHTML =
+            "<h4 class='error'>Not more than 100% discount!<h4/> ";
+
+          setTimeout(() => document.querySelector(".error").remove(), 3000);
+        } else if (DiscountPercentage < 0) {
+          Message.innerHTML =
+            "<h4 class='error'>Not less than 0% discount!<h4/> ";
 
           setTimeout(() => document.querySelector(".error").remove(), 3000);
         } else {
@@ -111,9 +136,9 @@ class AddItemComponent extends Component {
   }
   getTitle() {
     if (this.state.id === "_add") {
-      return <h3 className="text-center"> Add Item</h3>;
+      return <h3> Add Item</h3>;
     } else {
-      return <h3 className="text-center"> Update Item</h3>;
+      return <h3> Update Item</h3>;
     }
   }
   render() {
@@ -121,63 +146,48 @@ class AddItemComponent extends Component {
       <div>
         <br></br>
 
-        <div className="border container">
-          <br></br>
-          {this.getTitle()}
-          <div className="card-body">
-            <div id="msg" className="add-update-msg"></div>
-            <form>
-              <div className="form-group">
-                <br></br>
-
-                <input
-                  id="pName"
-                  placeholder="Name"
-                  className="form-control"
-                  value={this.state.name}
-                  onChange={this.changeName}
-                />
-              </div>
-              <br></br>
-              <div className="form-group">
-                <input
-                  id="oPrice"
-                  placeholder="Price"
-                  className="form-control"
-                  value={this.state.originalPrice}
-                  onChange={this.changeOriginalPrice}
-                />
-              </div>
-              <br></br>
-              <div className="form-group">
-                <input
-                  id="dPercentage"
-                  placeholder="Discount Percentage"
-                  className="form-control"
-                  value={this.state.discountPercentage}
-                  onChange={this.changeDiscountPercentage}
-                />
-              </div>
-
-              <br></br>
-              <div className="text-center">
-                <button
-                  id="add"
-                  className="button-36"
-                  onClick={this.addOrUpdate}
-                >
-                  Save
-                </button>
-                <button
-                  style={{ marginLeft: "10px" }}
-                  className="button-34"
-                  onClick={this.cancel}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
+        <div className="wrapper">
+          <form className="login">
+            <p className="title">{this.getTitle()}</p>
+            <div id="msg"></div>
+            <img src={grocery} className="logo-grocery-add" alt=""></img>
+            <input
+              id="pName"
+              placeholder="Product Name"
+              className="form-control"
+              value={this.state.name}
+              onChange={this.changeName}
+              autofocus
+            />
+            <i className="fa fa-shopping-cart" />
+            <input
+              id="oPrice"
+              placeholder="Price"
+              className="form-control"
+              value={this.state.originalPrice}
+              onChange={this.changeOriginalPrice}
+            />
+            <i className="fa fa-dollar" />
+            <input
+              id="dPercentage"
+              placeholder="Discount Percentage"
+              className="form-control"
+              value={this.state.discountPercentage}
+              onChange={this.changeDiscountPercentage}
+            />
+            <i className="fa fa-percent" />
+            <br></br>
+            <button  style={{ marginLeft: "50px" }}className="button-save" onClick={this.addOrUpdate}>
+              Save
+            </button>
+            <button
+              style={{ marginLeft: "10px" }}
+              className="button-cancel"
+              onClick={this.cancel}
+            >
+              Cancel
+            </button>
+          </form>
         </div>
       </div>
     );

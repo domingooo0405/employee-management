@@ -7,27 +7,26 @@ import ItemsComponent from "./components/ItemsComponent";
 import AddItemComponent from "./components/AddItemComponent";
 import ReceiptCompoent from "./components/ReceiptComponent";
 import LoginUserComponent from "./components/LoginUserComponent";
+import MenuComponent from "./components/MenuComponent";
 
 function App() {
   return (
     <div>
       <Router>
-        <HeaderComponent />
+        {/* <HeaderComponent /> */}
 
-        <div className="container">
-          <Switch>
-            <Route exact path="/" component={LoginUserComponent}></Route>
-            <Route exact path="/items" component={ItemsComponent}></Route>
-            <Route
-              exact
-              path="/add-item/:id"
-              component={AddItemComponent}
-            ></Route>
-            <Route path={"/view-item/:id"} component={ReceiptCompoent}></Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/" component={LoginUserComponent}></Route>
+          <Route path="/items" component={ItemsComponent}></Route>
+          <Route
+            exact
+            path="/add-item/:id"
+            component={AddItemComponent}
+          ></Route>
+          <Route path={"/view-item/:id"} component={ReceiptCompoent}></Route>
+        </Switch>
 
-        <FooterComponent />
+        {/* <FooterComponent /> */}
       </Router>
     </div>
   );

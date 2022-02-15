@@ -1,7 +1,6 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React, { Component } from "react";
 import UserService from "../service/UserService";
-
+import grocery from "../images/grocery-logo.jpg";
 class LoginUserComponent extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +32,8 @@ class LoginUserComponent extends Component {
             Username === foundUser.userName &&
             Password === foundUser.password
           ) {
-            alert("Login Successful")
+            localStorage.setItem("loginUser", foundUser.userName);
+            alert("Login Successful");
             this.props.history.push("/items");
           } else {
             Message.innerHTML =
@@ -49,28 +49,31 @@ class LoginUserComponent extends Component {
   render() {
     return (
       <div>
-        <div className="login-page">
-          <div className="form">
-            <form className="login-form">
-              <div id="msg" className="login-message"></div>
-              <br></br>
-              <input
-                type="text"
-                placeholder="username"
-                id="userN"
-                name="userName"
-              />
-              <input
-                type="password"
-                placeholder="password"
-                id="passW"
-                name="password"
-              />
-              <button className="button-36" onClick={this.login}>
-                Login
-              </button>
-            </form>
-          </div>
+        <div className="wrapper">
+          <form className="login">
+            <img src={grocery} className="logo-grocery-login" alt=""></img>
+            <p className="title">Login</p>
+            <div id="msg"></div>
+            <input
+              type="text"
+              placeholder="username"
+              id="userN"
+              name="userName"
+              autofocus
+            />
+            <i className="fa fa-user" />
+            <input
+              type="password"
+              placeholder="password"
+              id="passW"
+              name="password"
+            />
+            <i className="fa fa-key" />
+            <br></br>
+            <button className="button-login" onClick={this.login}>
+              Login
+            </button>
+          </form>
         </div>
       </div>
     );

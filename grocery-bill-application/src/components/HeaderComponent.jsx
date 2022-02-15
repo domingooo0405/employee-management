@@ -5,10 +5,10 @@ class HeaderComponent extends Component {
     return (
       <div>
         <header>
-          <br></br>
+       
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-              <h1>Grocery Bill Application</h1>{" "}
+              <p>Grocery Bill Application</p>
             </div>
           </nav>
         </header>

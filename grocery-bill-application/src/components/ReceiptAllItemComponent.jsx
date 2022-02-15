@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ItemService from "../service/ItemService";
-import grocery from "../images/grocery-logo.jpg";
-
-class ReceiptCompoent extends Component {
+class ReceiptAllitemComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +25,7 @@ class ReceiptCompoent extends Component {
       <div>
         <br></br>
         <table className="body-wrap1">
-          
+            
           <tbody>
             <tr>
               <td />
@@ -46,14 +44,8 @@ class ReceiptCompoent extends Component {
                             <tbody>
                               <tr>
                                 <td className="content-block">
-                                  <button
-                                    className="button-add-item"
-                                    onClick={this.cancel}
-                                  >
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                  
-                                  <h2 className="text-center">Receipt <img src={grocery} className="logo-grocery-receipt" alt=""></img></h2>
+                                <button className="xmark" onClick={this.cancel}>X</button>
+                                  <h2 className="text-center">Receipt</h2>
                                 </td>
                               </tr>
                               <tr>
@@ -84,11 +76,10 @@ class ReceiptCompoent extends Component {
                                               <tr>
                                                 <td>Discounted Price:</td>
                                                 <td className="alignright">
-                                                  {this.state.item
-                                                    .discountedPrice + " php"}
+                                                 {this.state.item.discountedPrice+" php"}
                                                 </td>
                                               </tr>
-                                              <tr className="total-per-item">
+                                              <tr className="total">
                                                 <td
                                                   className="alignright"
                                                   width="80%"
@@ -96,8 +87,7 @@ class ReceiptCompoent extends Component {
                                                   Total Bill:
                                                 </td>
                                                 <td className="alignright">
-                                                  {this.state.item.totalBill +
-                                                    " php"}
+                                                 {this.state.item.totalBill +" php"}
                                                 </td>
                                               </tr>
                                             </tbody>
@@ -109,15 +99,14 @@ class ReceiptCompoent extends Component {
                                 </td>
                               </tr>
 
-                              <tr className="text-center">
-                                © Created by Domingo C. Macunay Jr.
-                              </tr>
+                              <tr className="text-center">© Created by Domingo C. Macunay Jr.</tr>
                             </tbody>
                           </table>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+              
                 </div>
               </td>
               <td />
@@ -129,4 +118,4 @@ class ReceiptCompoent extends Component {
   }
 }
 
-export default ReceiptCompoent;
+export default ReceiptAllitemComponent;
